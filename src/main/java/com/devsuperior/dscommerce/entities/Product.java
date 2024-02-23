@@ -47,6 +47,10 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
