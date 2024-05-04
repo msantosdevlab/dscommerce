@@ -1,6 +1,7 @@
 package com.devsuperior.dscommerce.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,14 +24,17 @@ public class Product {
     private Long id;
     private String name;
 
-    @Column(columnDefinition = "TEXT") //texto longo
+    @Column(columnDefinition = "TEXT") // texto longo
     private String description;
     private Double price;
     private String imgUrl;
 
     @ManyToMany
-    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id")) //cria a tabela de conexão muitos para muitos
-    private Set<Category> categories = new HashSet<>(); //Set não aceita repetições
+    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id")) // cria a tabela de conexão  muitos para muitos
+    private Set<Category> categories = new HashSet<>(); // Set não aceita repetições
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product() {
     }
@@ -86,6 +91,14 @@ public class Product {
         return categories;
     }
 
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+    
+    public List<Order> getOrders() {
+        return items.stream().map(x -> x.getOrder()).toList();
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -110,6 +123,7 @@ public class Product {
             return false;
         return true;
     }
+
 
 
 }
