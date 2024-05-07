@@ -51,7 +51,7 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
-    //falha de integridade referencial, "delete restrict" nao deixa apagar caso o código seja chave estrangeira em outra entidade
+    //tentar apagar ID comprado: falha de integridade referencial, "delete restrict" nao deixa apagar caso o código seja chave estrangeira em outra entidade
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
