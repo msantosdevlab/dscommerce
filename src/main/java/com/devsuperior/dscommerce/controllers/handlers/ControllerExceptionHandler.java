@@ -45,7 +45,6 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<CustomError> forbiddenException(ForbiddenException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.FORBIDDEN;
